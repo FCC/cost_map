@@ -1,0 +1,289 @@
+{
+  "bounds": [
+    -180,
+    13,
+    180,
+    72
+  ],
+  "center": [
+    -98,
+    38,
+    4
+  ],
+  "format": "png",
+  "interactivity": {
+    "layer": "cq_cty_5",
+    "template_teaser": "<table class=\"tbl-data\">\n<tr>\n  <th colspan=\"2\" class=\"center\"><strong>{{{cty_name}}}, {{{state_name}}}</strong></th>\n</tr>\n<tr>\n  <td colspan=\"2\" class=\"center\">Projected percent of locations served</td>\n</tr>\n<tr>\n  <td colspan=\"2\" class=\"center\">by an unsubsidized competitor</td>\n</tr>\n<tr>\n  <td colspan=\"2\" class=\"center\"><img src=https://chart.googleapis.com/chart?cht=p&chs=250x100&chl=Unserved|Served&chco=6f6f6f,c3c3c3&chp=-.6&chd=t:{{{pereligible}}},{{{pernoneligible}}} alt=\"\"></td>\n</td>\n</tr>\n<tr>\n  <td colspan=\"2\" class=\"center\">Distribution of unserved locations in pie</td>\n</tr>\n<tr>\n  <td colspan=\"2\" class=\"center\">chart above by cost category</td>\n</tr>\n<tr>\n  <td colspan=\"2\" class=\"center\"><img src=http://chart.apis.google.com/chart?chxl=1:|%3E$600|$300-$600|$150-$300|$75-$150|%3C=$75|&chxr=0,0,{{{maxeligible}}}&chxt=x,y&chbh=a&chs=250x100&cht=bhs&chco=6f6f6f,c3c3c3&chds=0,{{{maxeligible}}},0,{{{maxeligible}}}&chd=t:{{{lowserved}}},{{{midlowserved}}},{{{midhighserved}}},{{{highserved}}},{{{vhighserved}}}|{{{lownotserved}}},{{{midlownotserved}}},{{{midhighnotserved}}},{{{highnotserved}}},{{{vhighnotserved}}} alt=\"\"/></td>\n</tr>\n<tr>\n  <td class=\"center\"><span style='color:#6f6f6f'>▉Served by Telco</span></td>\n  <td class=\"center\"><span style='color:#c3c3c3'>▉Not Served by Telco</span></td>\n</tr>\n</table>\n\n<style type=\"text/css\">\n .ts-map .wax-tooltip {\n  max-width: 550px !important;\n  max-height:550px !important;\n  overflow:visible !important;\n  width:auto\\9 !important;\n}\n .tbl-data th.center {\n text-align: center;\n } \n .tbl-data td, .tbl-data th {\n border: none;\n }\n</style>",
+    "template_full": "",
+    "template_location": "",
+    "fields": [
+      "cty_name",
+      "state_name",
+      "pereligible",
+      "pernoneligible",
+      "maxeligible",
+      "lowserved",
+      "midlowserved",
+      "midhighserved",
+      "highserved",
+      "vhighserved",
+      "lownotserved",
+      "midlownotserved",
+      "midhighnotserved",
+      "highnotserved",
+      "vhighnotserved",
+      "gid"
+    ]
+  },
+  "minzoom": 2,
+  "maxzoom": 10,
+  "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+  "Stylesheet": [
+    "style.mss",
+    "data-colors",
+    "labels",
+    "data"
+  ],
+  "Layer": [
+    {
+      "geometry": "polygon",
+      "Datasource": {
+        "type": "postgis",
+        "table": "(select gid, geom, county.cty, county.cty_name, county.state_name, cable,  lowserved,\n   lownotserved, midlowserved, midlownotserved, midhighserved,\n   midhighnotserved, highserved, highnotserved,  vhighserved, vhighnotserved, \n   maxeligible, pernoneligible,  pereligible\n   from carto.county , analysis.cq_fttp_cty_5\n   where county.cty=cq_fttp_cty_5.cty_fips ) as cq_cty_5\n",
+        "extent": "",
+        "key_field": "gid",
+        "geometry_field": "geom",
+        "host": "localhost",
+        "port": "54321",
+        "dbname": "fccgis",
+        "id": "cq_fttp_cty_5",
+        "project": "cq_fttp_cost_model",
+        "srs": null
+      },
+      "id": "cq_cty_5",
+      "class": "",
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "name": "cq_cty_5"
+    },
+    {
+      "geometry": "polygon",
+      "id": "land",
+      "name": "land",
+      "srs": "",
+      "class": "",
+      "Datasource": {
+        "file": "http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.3.0/physical/10m-land.zip",
+        "id": "land",
+        "srs": "",
+        "project": "RoadMiles"
+      }
+    },
+    {
+      "id": "countries",
+      "name": "countries",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "geometry": "polygon",
+      "Datasource": {
+        "file": "http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.3.0/cultural/10m-admin-0-countries.zip"
+      },
+      "class": ""
+    },
+    {
+      "geometry": "multipolygon",
+      "Datasource": {
+        "type": "postgis",
+        "table": "(select * from carto.states where state in ('60','66','69','72','78') ) as islands",
+        "extent": "",
+        "key_field": "gid",
+        "geometry_field": "geom",
+        "host": "localhost",
+        "port": "54321",
+        "dbname": "fccgis",
+        "id": "islands",
+        "project": "706map",
+        "srs": null
+      },
+      "id": "islands",
+      "class": "",
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "name": "islands"
+    },
+    {
+      "geometry": "polygon",
+      "Datasource": {
+        "type": "postgis",
+        "table": "(select * from analysis.cost_fttp_poly_5) as cost_poly_5",
+        "extent": "",
+        "key_field": "gid",
+        "geometry_field": "geom",
+        "host": "localhost",
+        "port": "54321",
+        "dbname": "fccgis",
+        "id": "cost_poly_5",
+        "project": "cq_fttp_cost_model",
+        "srs": null
+      },
+      "id": "cost_poly_5",
+      "class": "",
+      "srs-name": "900913",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "name": "cost_poly_5"
+    },
+    {
+      "geometry": "polygon",
+      "id": "lake",
+      "name": "lake",
+      "srs": "",
+      "class": "",
+      "Datasource": {
+        "file": "http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.3.0/physical/10m-lakes.zip",
+        "id": "lake",
+        "srs": "",
+        "project": "RoadMiles"
+      }
+    },
+    {
+      "geometry": "multipolygon",
+      "name": "state_high_res",
+      "id": "state_high_res",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "class": "",
+      "Datasource": {
+        "table": "(select * from carto.states) as state_high_res",
+        "key_field": "gid",
+        "geometry_field": "geom",
+        "extent": "",
+        "type": "postgis",
+        "dbname": "fccgis",
+        "host": "localhost",
+        "port": "54321"
+      },
+      "srs-name": "900913"
+    },
+    {
+      "geometry": "polygon",
+      "id": "state-name",
+      "name": "state-name",
+      "srs": "",
+      "class": "",
+      "Datasource": {
+        "file": "http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.4.0/cultural/10m-admin-1-states-provinces-shp.zip",
+        "id": "state-name",
+        "srs": "",
+        "project": "RoadMiles"
+      }
+    },
+    {
+      "geometry": "linestring",
+      "id": "state-line",
+      "name": "state-line",
+      "srs": "",
+      "class": "",
+      "Datasource": {
+        "file": "http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.3.0/cultural/10m-admin-1-states-provinces-lines-shp.zip",
+        "id": "state-line",
+        "srs": "",
+        "project": "RoadMiles"
+      }
+    },
+    {
+      "geometry": "linestring",
+      "id": "country-border",
+      "name": "country-border",
+      "srs": "",
+      "class": "",
+      "Datasource": {
+        "file": "http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.3.0/cultural/10m-admin-0-boundary-lines-land.zip",
+        "id": "country-border",
+        "srs": "",
+        "project": "RoadMiles"
+      }
+    },
+    {
+      "geometry": "multipolygon",
+      "name": "nearshore",
+      "id": "nearshore",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "class": "",
+      "Datasource": {
+        "table": "(select * from carto.water_poly \n) as nearshore",
+        "key_field": "gid",
+        "geometry_field": "geom",
+        "extent": "",
+        "type": "postgis",
+        "dbname": "fccgis",
+        "host": "localhost",
+        "port": "54321"
+      },
+      "srs-name": "900913"
+    },
+    {
+      "geometry": "polygon",
+      "name": "county",
+      "id": "county",
+      "srs": "+proj=merc +a=6378137 +b=6378137 +lat_ts=0.0 +lon_0=0.0 +x_0=0.0 +y_0=0.0 +k=1.0 +units=m +nadgrids=@null +wktext +no_defs +over",
+      "class": "",
+      "Datasource": {
+        "table": "(select * from carto.county\n) as county",
+        "key_field": "gid",
+        "geometry_field": "geom",
+        "extent": "",
+        "type": "postgis",
+        "dbname": "fccgis",
+        "host": "localhost",
+        "port": "54321",
+        "id": "county",
+        "project": "RoadMiles",
+        "srs": null
+      },
+      "srs-name": "900913"
+    },
+    {
+      "geometry": "linestring",
+      "id": "coastline",
+      "name": "coastline",
+      "srs": "",
+      "class": "",
+      "Datasource": {
+        "file": "http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.3.0/physical/10m-coastline.zip",
+        "id": "coastline",
+        "srs": "",
+        "project": "RoadMiles"
+      }
+    },
+    {
+      "geometry": "point",
+      "id": "city",
+      "name": "city",
+      "srs": "",
+      "class": "",
+      "Datasource": {
+        "file": "http://mapbox-geodata.s3.amazonaws.com/natural-earth-1.3.0/cultural/10m-populated-places-simple.zip",
+        "id": "city",
+        "srs": null,
+        "project": "RoadMiles"
+      }
+    },
+    {
+      "geometry": "point",
+      "name": "statecentroids",
+      "id": "statecentroids",
+      "srs": "",
+      "class": "",
+      "Datasource": {
+        "file": "/Users/michaelsbyrne/Documents/Data/state_centroids.shp",
+        "id": "statecentroids",
+        "project": "RoadMiles",
+        "srs": null
+      },
+      "srs-name": "autodetect"
+    }
+  ],
+  "name": "ABC Coalition FTTP Cost Model",
+  "description": "This map shows the forward-looking cost of a fiber-to-the-premises (FTTP) broadband deployment, as estimated by a large publicly available cost model.  This model takes into account the location of current broadband and telecommunications infrastructure as well as the current count of residential and business locations.  The map shows the range of the total monthly cost for each location and whether each area has broadband currently available.\nThe Wireline Competition Bureau is seeking comment from the public about how it should calculate forward-looking costs as directed by the Commission (see http://www.fcc.gov/document/connect-america-fund-phase-ii-model-design-and-inputs).  The data shown here come from a model submitted by a coalition of telecom carriers (see Connect America Fund, High-Cost Universal Service Support, WC Docket Nos. 10-90, 05-337, Second Supplemental Protective Order, 27 FCC Rcd 1503 (Wireline Comp. Bur. 2012) and does not represent the work of either the Bureau or the Commission.",
+  "attribution": "<img align=\"left\" src=",
+  "legend": "<table class=\"tbl-data\">\n  <tr>\n    <th colspan=\"3\" class=\"center\">ABC Coalition FTTP Model: Monthly Cost</th>\n  </tr>\n  <tr>\n    <td colspan=\"3\" class=\"center\"><span style='color:#fff4f9'>▉</span> Unpopulated <span style='color:#fffde3'>▉</span>Served by Cable\n  </td>\n  </tr>\n  <tr>\n    <td></td>\n    <td><center>Served</center></td>\n    <td><center>Unserved</center></td>\n  </tr>\n  <tr>\n    <td><center>Less than $75 per location</center></td>\n    <td><center><span style='color:#97E3E1'>▉</span></center></td>\n    <td><center><span style='color:#0000AB'>▉</span></center></td>\n  </tr>\n  <tr>\n    <td class=\"center\">$75 to $150 per location</td>\n    <td class=\"center\"><span style='color:#9ea1bf'>▉</span></td>  \n    <td class=\"center\"><span style='color:#464855'>▉</span></td>\n  </tr>\n  <tr>\n    <td class=\"center\">$150 to $300 per location</td>\n    <td class=\"center\"><span style='color:#97bed0'>▉</span></td>\n    <td class=\"center\"><span style='color:#7593a1'>▉</span></td>\n  </tr>\n  <tr>\n    <td class=\"center\">$300 to $600 per location</td>\n    <td class=\"center\"><span style='color:#ffb901'>▉</span></td>\n    <td class=\"center\"><span style='color:#d08603'>▉</span></td>\n  </tr>\n  <tr>\n    <td class=\"center\">Greater than $600 per location</td>\n    <td class=\"center\"><span style='color:#9ad657'>▉</span></td>\n    <td class=\"center\"><span style='color:#639e0a'>▉</span></td>\n  </tr> \n</table>\n\n<style type=\"text/css\">\n.ts-map .wax-legend {\n  max-width:400px !important;\n  max-height:300px !important;\n  overflow:visible !important;\n  width:auto\\9 !important;\n}\n .tbl-data th.center, td.center {\n text-align: center;\n }\n .tbl-data td, .tbl-data th {\n border: none;\n }\n</style>",
+  "version": "1.0.1"
+}
