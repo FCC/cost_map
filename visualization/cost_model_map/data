@@ -1,0 +1,136 @@
+/* This is where the data is called and styled. */
+/* Uncomment for use.                           */
+
+/* This is where the data is called and styled. */
+/* Uncomment for use. */  
+@unPop: #fff4f9; /*1*/
+@CableServed: #FFFDE3;/*2 */
+
+@LowTelServ: #97E3E1;/*11 - 5ceffd*/
+@MidLowTelServ: #9ea1bf; /*9 - */
+@MidHighTelServ: #97bed0; /*7*/
+@HighTelServ: #ffb901; /*5 - */
+@VHighTelServ: #9ad657; /*3 - */
+
+@LowTelNServ: #0000AB;/*12*/ 
+@MidLowTelNServ: #464855; /*10*/
+@MidHighTelNServ: #7593a1; /*8 -  try #5A7281 */
+@HighTelNServ: #d08603; /*6 - */
+@VHighTelNServ: #639e0a; /*4 - */
+
+/*
+--1 - un-populated
+--2 - served by cable
+--3 - above 635 and telco served
+--4 - above 635 and telco unserved
+--5 - 300 to 635 and telco served
+--6 - 300 to 635 and telco unserved
+--7 - 150 to 300 and telco served
+--8 - 150 to 300 and telco unserved
+--9 - 75 to 150 and telco served
+--10 - 75 to 150 and telco unserved
+--11 - less than 75 and telco served
+--12 - less than 75 and telco unserved
+--13 - water
+*/
+/*
+#cost_poly_5{
+  [myvalue='1'] {
+ polygon-fill: @unPop;
+   }
+ [myvalue = '2'] {
+ polygon-fill: @CableServed;
+   }
+ [myvalue = '3'] {
+ polygon-fill: @VHighTelServ;
+   }  
+ [myvalue = '4'] {
+ polygon-fill: @VHighTelNServ;
+   }
+ [myvalue = '5'] {
+ polygon-fill: @HighTelServ;
+   }
+ [myvalue = '6'] {
+ polygon-fill: @HighTelNServ;
+   }
+ [myvalue = '7'] {
+ polygon-fill: @MidLowTelServ;
+   }
+ [myvalue = '8'] {
+ polygon-fill: @MidLowTelNServ;
+   }
+ [myvalue = '9'] {
+ polygon-fill: @MidHighTelServ;
+   }
+ [myvalue = '10'] {
+ polygon-fill: @MidHighTelNServ;
+   } 
+ [myvalue = '11'] {
+ polygon-fill: @LowTelServ;
+   }
+ [myvalue = '12'] {
+ polygon-fill: @LowTelNServ;
+   }   
+ [myvalue = '13'] {
+ polygon-fill: @water;
+   }
+}*/
+
+
+/*the cq_fttp_cty_5 layer exists soley for the mouse over properties
+  this layer gives the mouse over values, so we draw it as opaque 
+  and place it last or nearly last in the add layer list*/
+#cq_cty_5 {
+  [zoom>4]{
+  polygon-opacity:1;
+  polygon-fill:@water;
+    }
+}
+
+/*the county layer draw all county boudaries and labels the county names*/
+#county {
+ [zoom>4][zoom<7]{
+  line-color:@darkchrome;
+  line-opacity:0.15;
+  line-width:0.85;
+    }
+}
+
+#county {
+ [zoom>6][zoom<9]{
+  line-color:@darkchrome;
+  line-opacity:0.15;
+  line-width:1.75;
+    }
+  [zoom>8]{
+  line-color:@darkchrome;
+  line-opacity:0.15;
+  line-width:2.75;
+  }
+  [zoom>7]{
+  text-name:"[cty_name]";
+  text-face-name:@sans-bold;
+  text-size:9;
+  text-fill:fadeout(@state-name, 55%);
+  text-halo-radius:3;
+  }
+}
+
+/*the nearshore layer is water and on top to cover 'land' and get a 
+  nice coast line*/
+#nearshore {
+  [zoom>7] {
+  polygon-fill:@water; 
+  }
+}
+
+/*the state high res layer comes on above zoom scale 7 so the block, county
+  and state layers are all coincident*/
+#state_high_res {
+  [zoom>7]{
+    line-color: fadeout(#222c31, 45%); 
+    line-width:2.0;
+    }
+ }
+
+
